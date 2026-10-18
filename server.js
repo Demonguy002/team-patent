@@ -90,16 +90,7 @@ const swaggerOptions = {
             {
                 url: "https://team-patent.onrender.com",
                 description: "Live Render Backend"
-            },
-
-            ...(process.env.RENDER_EXTERNAL_URL
-                ? [
-                    {
-                        url: process.env.RENDER_EXTERNAL_URL,
-                        description: "Render production server"
-                    }
-                ]
-                : [])
+            }
         ],
 
         components: {
@@ -1213,7 +1204,8 @@ async function initializeMembers() {
             },
             {
                 upsert: true
-        });
+            }
+        );
     }
 
     console.log(
