@@ -19,19 +19,23 @@ app.use(express.json({ limit: "50kb" }));
 // 1. CORS CONFIGURATION
 // ======================================================
 
+const normalizeOrigin = (origin) =>
+    origin.trim().replace(/\/+$/, "");
+
 const allowedOrigins = new Set([
     "http://localhost:1234",
     "http://127.0.0.1:1234",
     "http://localhost:5000",
     "http://127.0.0.1:5000",
     "http://localhost:5173",
-    "http://127.0.0.1:5173"
+    "http://127.0.0.1:5173",
+    "https://team-patent.onrender.com"
 ]);
 
 if (process.env.FRONTEND_URL) {
     process.env.FRONTEND_URL
         .split(",")
-        .map(origin => origin.trim().replace(/\/+$/, ""))
+        .map(normalizeOrigin)
         .filter(Boolean)
         .forEach(origin => allowedOrigins.add(origin));
 }
@@ -42,7 +46,9 @@ app.use(cors({
             return callback(null, true);
         }
 
-        const normalizedOrigin = origin.replace(/\/+$/, "");
+        const normalizedOrigin = normalizeOrigin(origin);
+
+        console.log("Incoming request origin:", normalizedOrigin);
 
         if (allowedOrigins.has(normalizedOrigin)) {
             return callback(null, true);
