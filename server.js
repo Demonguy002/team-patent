@@ -88,8 +88,8 @@ const swaggerOptions = {
 
         servers: [
             {
-                url: "http://localhost:5000",
-                description: "Local development"
+                url: "https://team-patent.onrender.com",
+                description: "Live Render Backend"
             },
 
             ...(process.env.RENDER_EXTERNAL_URL
